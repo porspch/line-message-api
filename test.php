@@ -14,10 +14,8 @@ $request_array = json_decode($request, true);   // Decode JSON to Array
 
 
 if ( sizeof($request_array['events']) > 0 ) {
-
+	sleep(10);
     foreach ($request_array['events'] as $event) {
-
-		sleep(10);
 
         $reply_message = 'Cool down 10 seconds';
         $reply_token = $event['replyToken'];
