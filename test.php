@@ -1,10 +1,8 @@
 <?php
 
-
 $API_URL = 'https://api.line.me/v2/bot/message';
 $ACCESS_TOKEN = 'p7tGM4q/PdhBFVzB8N+IGaK7goIZKAT3ClnZ4CT5DyIjAG4orpG4pwZXlg2XxqgQHjlHY9ceiJpiwoHNLElXr5AvPppKn8joc4pzjWIH4FXMcCiUubVTSDQsMSmgcinjQz1ltjePk5xKCQgvj+Y/kgdB04t89/1O/w1cDnyilFU='; 
 $channelSecret = '9c91e2af563a3e5ea510047cfdec0ba5';
-
 
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
 
@@ -13,7 +11,7 @@ $request_array = json_decode($request, true);   // Decode JSON to Array
 
 if ( sizeof($request_array['events']) > 0 ) {
 	foreach ($request_array['events'] as $event) {
-		if($request_array['events']['message']['text'] == "ทดสอบ'"){
+		if($event['message']['text'] == "ทดสอบ'"){
 			
 			$reply_message = 'จะทดสอบใช่ไหมฮ่าๆๆๆ';
 			$reply_token = $event['replyToken'];
@@ -29,7 +27,7 @@ if ( sizeof($request_array['events']) > 0 ) {
 
 			echo "Result: ".$send_result."\r\n";
 			
-		}else if($request_array['events']['message']['text'] == "สอบถาม'"){
+		}else if($event['message']['text'] == "สอบถาม'"){
 			
 			$reply_message = 'ถามไรตอบได้';
 			$reply_token = $event['replyToken'];
@@ -45,9 +43,9 @@ if ( sizeof($request_array['events']) > 0 ) {
 
 			echo "Result: ".$send_result."\r\n";
 			
-		}else if($request_array['events']['message']['text'] == "test"){
+		}else if($event['message']['text'] == "test"){
 			
-			$reply_message = 'ถามไรตอบได้';
+			$reply_message = 'For Test';
 			$reply_token = $event['replyToken'];
 
 			$data = [
