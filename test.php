@@ -11,26 +11,44 @@ $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' 
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
 
-
-
 if ( sizeof($request_array['events']) > 0 ) {
-	sleep(10);
-    foreach ($request_array['events'] as $event) {
+	foreach ($request_array['events'] as $event) {
+		if($request_array['events']['messages']['text'] == 'ทดสอบ'){
+			
+			$reply_message = 'Hi bro!';
+			$reply_token = $event['replyToken'];
 
-        $reply_message = 'Cool down 10 seconds';
-        $reply_token = $event['replyToken'];
+			$data = [
+				'replyToken' => $reply_token,
+				// 'messages' => [['type' => 'text', 'text' => json_encode($request_array)]]
+				'messages' => [['type' => 'text', 'text' => json_encode($reply_message)]]
+			];
+			$post_body = json_encode($data, JSON_UNESCAPED_UNICODE); 
+			
+			$send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
 
-		$data = [
-            'replyToken' => $reply_token,
-            'messages' => [['type' => 'text', $reply_message => json_encode($request_array)]]
-        ];
-        $post_body = json_encode($data, JSON_UNESCAPED_UNICODE); 
-		
-        $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+			echo "Result: ".$send_result."\r\n";
+			
+		}else{
+			
+			sleep(10);
+			
+			$reply_message = 'Cool down 10 seconds';
+			$reply_token = $event['replyToken'];
 
-        echo "Result: ".$send_result."\r\n";
-        
-    }
+			$data = [
+				'replyToken' => $reply_token,
+				// 'messages' => [['type' => 'text', 'text' => json_encode($request_array)]]
+				'messages' => [['type' => 'text', 'text' => json_encode($reply_message)]]
+			];
+			$post_body = json_encode($data, JSON_UNESCAPED_UNICODE); 
+			
+			$send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+			echo "Result: ".$send_result."\r\n";
+			
+		}
+	}
 }
 
 echo "OK";
