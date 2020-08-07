@@ -13,7 +13,7 @@ $request_array = json_decode($request, true);   // Decode JSON to Array
 
 if ( sizeof($request_array['events']) > 0 ) {
 	foreach ($request_array['events'] as $event) {
-		if($request_array['events']['messages']['text'] == "ทดสอบ'"){
+		if($request_array['events']['message']['text'] == "ทดสอบ'"){
 			
 			$reply_message = 'จะทดสอบใช่ไหมฮ่าๆๆๆ';
 			$reply_token = $event['replyToken'];
@@ -29,7 +29,7 @@ if ( sizeof($request_array['events']) > 0 ) {
 
 			echo "Result: ".$send_result."\r\n";
 			
-		}else if($request_array['events']['messages']['text'] == "สอบถาม'"){
+		}else if($request_array['events']['message']['text'] == "สอบถาม'"){
 			
 			$reply_message = 'ถามไรตอบได้';
 			$reply_token = $event['replyToken'];
