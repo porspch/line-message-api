@@ -13,9 +13,25 @@ $request_array = json_decode($request, true);   // Decode JSON to Array
 
 if ( sizeof($request_array['events']) > 0 ) {
 	foreach ($request_array['events'] as $event) {
-		if($request_array['events']['messages']['text'] == 'ทดสอบ'){
+		if($request_array['events']['messages']['text'] == "ทดสอบ'"){
 			
-			$reply_message = 'Hi bro!';
+			$reply_message = 'จะทดสอบใช่ไหมฮ่าๆๆๆ';
+			$reply_token = $event['replyToken'];
+
+			$data = [
+				'replyToken' => $reply_token,
+				// 'messages' => [['type' => 'text', 'text' => json_encode($request_array)]]
+				'messages' => [['type' => 'text', 'text' => json_encode($reply_message)]]
+			];
+			$post_body = json_encode($data, JSON_UNESCAPED_UNICODE); 
+			
+			$send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+			echo "Result: ".$send_result."\r\n";
+			
+		}else if($request_array['events']['messages']['text'] == "สอบถาม'"){
+			
+			$reply_message = 'ถามไรตอบได้';
 			$reply_token = $event['replyToken'];
 
 			$data = [
